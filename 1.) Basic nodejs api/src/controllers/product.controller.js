@@ -1,4 +1,4 @@
-import ProductService from "../services/product.service";
+import ProductService from "../services/product.service.js";
 
 class ProductController {
 
@@ -42,15 +42,35 @@ class ProductController {
     }
 
     // find a product that matches an id
-    async getProductByid(req, res) {
+    async getProductById(req, res) {
         const id = req.params.id
         const product = await ProductService.getProductById(id)
-        res.status(200), send({
+        res.status(200).send({
             success: true,
             product
         })
     }
 
+    // update a product that matches an id
+    async updateProductById(req, res) {
+        const id = req.params.id;
+        const data = req.body;
+        const product = await ProductService.updateProduct(id, data)
+        res.status(200).send({
+            success: true,
+            product
+        })
+    }
+
+    // delete a product that matches an id
+    async deleteProductById(req, res) {
+        const id = req.params.id
+        const product = await ProductService.deletProductById(id)
+        res.status(200).send({
+            success: true,
+            product
+        })
+    }
 }
 
 export default new ProductController();
