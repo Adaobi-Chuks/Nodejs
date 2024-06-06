@@ -8,6 +8,7 @@ class ProductController {
         const newProduct = await ProductService.createProduct(productData);
         res.status(201).send({
             success: true,
+            message: "Product created successfully",
             newProduct
         })
     }
