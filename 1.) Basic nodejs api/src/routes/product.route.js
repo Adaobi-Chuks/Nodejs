@@ -3,8 +3,9 @@ const router = Router();
 import ProductController from "../controllers/product.controller.js"
 import validate from "../middlewares/validate.middleware.js";
 import { createProductSchema } from "../schema/product.schema.js";
+import authenticate from "../middlewares/authentication.middleware.js";
 
-router.post("/", validate(createProductSchema), ProductController.createProduct);
+router.post("/", authenticate, validate(createProductSchema), ProductController.createProduct);
 
 router.get("/", ProductController.getProducts);
 router.get("/query", ProductController.getProductQuery);

@@ -5,7 +5,8 @@ class ProductController {
     // create a new product
     async createProduct(req, res) {
         const productData = req.body;
-        const newProduct = await ProductService.createProduct(productData);
+        const userId = req.user._id
+        const newProduct = await ProductService.createProduct({ ...productData, userId });
         res.status(201).send({
             success: true,
             message: "Product created successfully",

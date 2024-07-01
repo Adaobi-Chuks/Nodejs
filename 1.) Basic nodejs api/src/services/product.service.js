@@ -11,7 +11,7 @@ class ProductService {
 
     // returns all the product
     async getProducts() {
-        const products = await ProductModel.find();
+        const products = await ProductModel.find().populate("userId", "email -_id");
         return products;
     }
 

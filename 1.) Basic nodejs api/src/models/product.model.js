@@ -1,11 +1,22 @@
 import { Schema, model } from "mongoose";
 
+//One to one
+//one to many
+//many to many
+
 const productSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: true,
         trim: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        unique: false,
+        trim: true,
+        ref: "user"
     },
     description: {
         type: String,

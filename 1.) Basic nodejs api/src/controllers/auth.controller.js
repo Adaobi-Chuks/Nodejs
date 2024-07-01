@@ -32,6 +32,7 @@ class AuthController {
             httpOnly: true,
             maxAge: 3 * 24 * 60 * 60 * 1000
         })
+        console.log(res)
 
         //send back a response with the user details
         return res.status(201).send({
@@ -66,10 +67,10 @@ class AuthController {
             _id: user._id,
             email: user.email
         },
-            process.env.secret,
+            "secret",
             { expiresIn: 3 * 24 * 60 * 60 }
         );
-
+        
         //pass the cookie to the frontend which keeps the user logged in for a certain period of time
         res.cookie("token", token, {
             httpOnly: true,
