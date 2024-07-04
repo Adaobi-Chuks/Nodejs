@@ -45,9 +45,16 @@ class ProductController {
 
     // find a product that matches an id
     async getProductById(req, res) {
+        //validate id if it's expecting an id
         const id = req.params.id
         const product = await ProductService.getProductById(id)
-        res.status(200).send({
+        if (!product) {
+            return res.status(404).send({
+                message: "Invalid _id",
+                success: false
+            })
+        }
+        return res.status(200).send({
             success: true,
             product
         })
@@ -57,6 +64,13 @@ class ProductController {
     async updateProductById(req, res) {
         const id = req.params.id;
         const data = req.body;
+        const foundProduct = await ProductService.getProductById(id)
+        if (!foundProduct) {
+            return res.status(404).send({
+                message: "Invalid _id",
+                success: false
+            })
+        }
         const product = await ProductService.updateProduct(id, data)
         res.status(200).send({
             success: true,
@@ -67,6 +81,13 @@ class ProductController {
     // delete a product that matches an id
     async deleteProductById(req, res) {
         const id = req.params.id
+        const foundProduct = await ProductService.getProductById(id)
+        if (!foundProduct) {
+            return res.status(404).send({
+                message: "Invalid _id",
+                success: false
+            })
+        }
         const product = await ProductService.deletProductById(id)
         res.status(200).send({
             success: true,

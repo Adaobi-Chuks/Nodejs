@@ -8,6 +8,15 @@ class AuthController {
         //get the user from req.body
         const userData = req.body;
 
+        //validate unique fields
+        const user = UserService.findOne({ email: userData.email })
+        if (user) {
+            return res.status(404).send({
+                message: "Duplicate email",
+                status: 404
+            })
+        }
+
         //encrypt the password
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(userData.password, salt);
@@ -71,7 +80,7 @@ class AuthController {
             "secret",
             { expiresIn: 3 * 24 * 60 * 60 }
         );
-        
+
         //pass the cookie to the frontend which keeps the user logged in for a certain period of time
         res.cookie("token", token, {
             httpOnly: true,
