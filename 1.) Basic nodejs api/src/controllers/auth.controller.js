@@ -15,13 +15,15 @@ class AuthController {
         //create the new user
         const newUser = await UserService.create({
             email: userData.email,
-            password: encryptedPassword
+            password: encryptedPassword,
+            role: userData.role
         });
 
         //create a token which is used to validate the user is a valid user
         const token = jwt.sign({
             _id: newUser._id,
-            email: newUser.email
+            email: newUser.email,
+            role: newUser.role
         },
             "secret",
             { expiresIn: 3 * 24 * 60 * 60 }
@@ -32,7 +34,6 @@ class AuthController {
             httpOnly: true,
             maxAge: 3 * 24 * 60 * 60 * 1000
         })
-        console.log(res)
 
         //send back a response with the user details
         return res.status(201).send({

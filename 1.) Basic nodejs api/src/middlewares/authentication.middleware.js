@@ -7,7 +7,6 @@ async function authenticate(req, res, next) {
     //get the cookie
     const token = await req.cookies.token;
 
-    console.log(token)
     //no cookie
     if (!token) {
         return res.status(401).send({
